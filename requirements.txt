@@ -1,1 +1,4 @@
 shiny
+shinylive
+pandas
+openpyxl
