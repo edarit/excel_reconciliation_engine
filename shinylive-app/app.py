@@ -3,7 +3,7 @@ from __future__ import annotations
 import csv
 import io
 import re
-import pandas
+
 from typing import Any
 
 from shiny import App, reactive, render, ui
@@ -53,8 +53,8 @@ app_ui = ui.page_fluid(
         ui.h4("Summary"),
         ui.output_ui("summary_ui"),
         ui.hr(),
-        ui.h4("Preview"),
-        ui.output_table("preview"),
+        # ui.h4("Preview"),
+        # ui.output_table("preview"),
     )
 )
 
@@ -338,27 +338,27 @@ def server(input, output, session):
     #     except Exception:
     #         return [{"info": "No result yet. Upload two CSV files, map columns, then click Run reconciliation."}]
 
-    @output
-    @render.ui
-    def preview():
-        try:
-            data = result_rows()
-            if not data:
-                return ui.p("No results.")
+    # @output
+    # @render.ui
+    # def preview():
+    #     try:
+    #         data = result_rows()
+    #         if not data:
+    #             return ui.p("No results.")
                 
-            # Manually build a simple HTML table
-            header = [ui.tags.th(k) for k in data[0].keys()]
-            rows = []
-            for row in data[:10]: # Limit to first 10 for preview
-                rows.append(ui.tags.tr([ui.tags.td(str(v)) for v in row.values()]))
+    #         # Manually build a simple HTML table
+    #         header = [ui.tags.th(k) for k in data[0].keys()]
+    #         rows = []
+    #         for row in data[:10]: # Limit to first 10 for preview
+    #             rows.append(ui.tags.tr([ui.tags.td(str(v)) for v in row.values()]))
                 
-            return ui.tags.table(
-                ui.tags.thead(ui.tags.tr(header)),
-                ui.tags.tbody(rows),
-                class_="table shiny-table w-auto"
-            )
-        except Exception:
-            return ui.p("Upload files and click Run.")
+    #         return ui.tags.table(
+    #             ui.tags.thead(ui.tags.tr(header)),
+    #             ui.tags.tbody(rows),
+    #             class_="table shiny-table w-auto"
+    #         )
+    #     except Exception:
+    #         return ui.p("Upload files and click Run.")
     
     @output
     @render.download(filename="reconciliation_lite.csv")
